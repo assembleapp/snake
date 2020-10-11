@@ -7,17 +7,25 @@ import Board from "./board"
 var dimensions = {x: 15, y: 15}
 
 var snake = observable([
-  [0,3],
-  [0,2],
-  [0,1],
-  [0,0]
+  [1,13],
+  [1,12],
+  [1,11],
+  [1,10]
 ])
 
 var meal = observable({x: 4, y: 3})
 var heading = observable.box(2)
 
-setInterval(() => heading.set((heading.get() + 1) % 4), 510)
-setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 2000)
+document.onkeydown = (e => {
+  heading.set({
+    ArrowUp: 0,
+    ArrowRight: 1,
+    ArrowDown: 2,
+    ArrowLeft: 3,
+  }[e.code])
+})
+
+setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 500)
 
 const chooseNeighbor = (cell, heading) => (
   [
