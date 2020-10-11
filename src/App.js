@@ -4,6 +4,13 @@ import { observable, autorun, toJS } from "mobx"
 
 import Board from "./board"
 
+const random_choose = () => (
+  {
+    x: Math.floor(Math.random() * dimensions.x),
+    y: Math.floor(Math.random() * dimensions.y),
+  }
+)
+
 var dimensions = {x: 15, y: 15}
 
 var snake = observable([
@@ -13,7 +20,7 @@ var snake = observable([
   [0,0]
 ])
 
-var meal = observable({x: 4, y: 3})
+var meal = observable(random_choose())
 var heading = observable.box(2)
 
 document.onkeydown = (e => {
