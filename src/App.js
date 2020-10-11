@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from "styled-components"
-import { observable, autorun, toJS } from "mobx"
+import { observable, autorun, toJS, runInAction } from "mobx"
 
 import Board from "./board"
 
 const random_choose = () => (
-  {
-    x: Math.floor(Math.random() * dimensions.x),
-    y: Math.floor(Math.random() * dimensions.y),
-  }
+  [
+    Math.floor(Math.random() * dimensions.x),
+    Math.floor(Math.random() * dimensions.y),
+  ]
 )
 
 var dimensions = {x: 15, y: 15}
@@ -44,6 +44,15 @@ const endGame = () => {
 autorun(() => {
   if(toJS(snake).map(x => x.join(",")).some((value, index, self) => self.indexOf(value) !== index ))
     endGame()
+})
+
+autorun(() => {
+  console.log(toJS(snake)[0].join(","), meal.join(","))
+  console.log(toJS(snake)[0].join(",") === meal.join(","))
+  if(toJS(snake)[0].join(",") === meal.join(",")) {
+    runInAction(() => meal.replace(random_choose()))
+    // snake.replace(snake.concat(snake[-1]))
+  }
 })
 
 const chooseNeighbor = (cell, heading) => {

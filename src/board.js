@@ -16,7 +16,7 @@ const Board = ({dimensions, snake, meal, heading}) => (
                 : null
                 }
 
-                { meal.y * dimensions.x + meal.x === x
+                { meal[1] * dimensions.x + meal[0] === x
                 ? 'm'
                 : null
                 }
