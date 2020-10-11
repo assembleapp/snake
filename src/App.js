@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components"
-import { observable } from "mobx"
+import { observable, autorun, toJS } from "mobx"
 
 import Board from "./board"
 
@@ -29,6 +29,11 @@ document.onkeydown = (e => {
 })
 
 var clock = setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 500)
+
+autorun(() => {
+  if(toJS(snake).map(x => x.join(",")).some((value, index, self) => self.indexOf(value) !== index ))
+    clearInterval(clock)
+})
 
 const chooseNeighbor = (cell, heading) => {
   var neighbor = [
