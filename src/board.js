@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const Board = ({dimensions, snake, meal}) => (
     <Scene dimensions={dimensions}>
-        {[0,0,0,0].map(x => (
+        {[...Array(dimensions.x * dimensions.y)].map(x => (
             <Cell>
                 x
             </Cell>
@@ -17,9 +17,11 @@ border: 1px solid #ededed;
 
 const Scene = styled.div`
 display: grid;
-grid-template-columns: repeat(${p => p.dimensions.x}, 1fr);
-grid-template-rows: repeat(${p => p.dimensions.y}, 1fr);
-grid-gap: 1rem;
+grid-template-columns: repeat(${p => p.dimensions.x}, 2rem);
+grid-template-rows: repeat(${p => p.dimensions.y}, 2rem);
+grid-gap: 0.1rem;
+margin-left: auto;
+margin-right: auto;
 `
 
 export default Board;
