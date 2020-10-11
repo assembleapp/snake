@@ -14,9 +14,10 @@ var snake = observable([
 ])
 
 var meal = observable({x: 4, y: 3})
-var heading = observable.box(1)
+var heading = observable.box(2)
 
 setInterval(() => heading.set((heading.get() + 1) % 4), 500)
+setInterval(() => snake.replace([[0, snake[0][1] + 1]].concat(snake.slice(0, -1))), 2000)
 
 function App() {
   return (
