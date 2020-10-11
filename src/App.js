@@ -10,6 +10,7 @@ function App() {
       dimensions={{x: 15, y: 15}}
       snake={[[0,3], [0,2], [0,1], [0,0]]}
       meal={{x: 4, y: 3}}
+      heading={1}
       />
     </Application>
   );

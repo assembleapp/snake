@@ -1,12 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 
-const Board = ({dimensions, snake, meal}) => (
+// headings: 0 is up, 1 is >, 2 is down, 3 is <
+const Board = ({dimensions, snake, meal, heading}) => (
     <Scene dimensions={dimensions}>
         {[...Array(dimensions.x * dimensions.y).keys()].map(x => (
             <Cell>
                 {snake[0][1] * dimensions.x + snake[0][0] === x
-                ? 's'
+                ? ['^', '>', '\\/', '<'][heading]
                 : null
                 }
                 {snake.slice(1).some(p => p[1] * dimensions.x + p[0] === x)
