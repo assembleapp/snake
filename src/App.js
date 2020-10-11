@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components"
 import { observable, autorun, toJS, runInAction } from "mobx"
+import { observer } from "mobx-react"
 
 import Board from "./board"
 
@@ -22,6 +23,7 @@ var snake = observable([
 
 var meal = observable(random_choose())
 var heading = observable.box(2)
+var clockSpeed = 500
 
 document.onkeydown = (e => {
   const recognized_keys = {
@@ -35,23 +37,31 @@ document.onkeydown = (e => {
     heading.set(recognized_keys[e.code])
 })
 
-var clock = setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 500)
+var clock = null
+const runClock = () => {
+  clearInterval(clock)
+  clock = setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), clockSpeed)
+}
+
+runClock()
 
 const endGame = () => {
   clearInterval(clock)
 }
 
 autorun(() => {
-  if(toJS(snake).map(x => x.join(",")).some((value, index, self) => self.indexOf(value) !== index ))
+  if(toJS(snake).map(x => x.join(",")).lastIndexOf(toJS(snake)[0].join(",")) !== 0 )
     endGame()
 })
 
 autorun(() => {
-  console.log(toJS(snake)[0].join(","), meal.join(","))
-  console.log(toJS(snake)[0].join(",") === meal.join(","))
   if(toJS(snake)[0].join(",") === meal.join(",")) {
-    runInAction(() => meal.replace(random_choose()))
-    // snake.replace(snake.concat(snake[-1]))
+    runInAction(() => {
+      meal.replace(random_choose())
+      snake.push(snake[snake.length-1])
+    })
+    clockSpeed = clockSpeed * 0.9
+    runClock()
   }
 })
 
@@ -81,6 +91,7 @@ function App() {
       meal={meal}
       heading={heading}
       />
+      <AppHeader>Score: {snake.length}</AppHeader>
     </Application>
   );
 }
@@ -102,4 +113,4 @@ grid-template-rows: 4rem auto;
 color: #ededed;
 `
 
-export default App;
+export default observer(App);
