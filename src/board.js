@@ -5,6 +5,11 @@ const Board = ({dimensions, snake, meal}) => (
     <Scene dimensions={dimensions}>
         {[...Array(dimensions.x * dimensions.y).keys()].map(x => (
             <Cell>
+                {snake.some(p => p[1] * dimensions.x + p[0] === x)
+                ? 's'
+                : null
+                }
+
                 { meal.y * dimensions.x + meal.x === x
                 ? 'm'
                 : null
