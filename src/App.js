@@ -6,7 +6,7 @@ function App() {
   return (
     <Application>
       <AppHeader>Snake Game</AppHeader>
-      <Board dimensions={{x: 15, y: 15}} snake={[]}>
+      <Board dimensions={{x: 15, y: 15}} snake={[]} meal={{x: 4, y: 3}}>
 
       </Board>
     </Application>

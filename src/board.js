@@ -3,9 +3,12 @@ import styled from "styled-components"
 
 const Board = ({dimensions, snake, meal}) => (
     <Scene dimensions={dimensions}>
-        {[...Array(dimensions.x * dimensions.y)].map(x => (
+        {[...Array(dimensions.x * dimensions.y).keys()].map(x => (
             <Cell>
-                x
+                { meal.y * dimensions.x + meal.x === x
+                ? 'm'
+                : null
+                }
             </Cell>
         ))}
     </Scene>
