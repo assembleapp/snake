@@ -17,12 +17,15 @@ var meal = observable({x: 4, y: 3})
 var heading = observable.box(2)
 
 document.onkeydown = (e => {
-  heading.set({
+  const recognized_keys = {
     ArrowUp: 0,
     ArrowRight: 1,
     ArrowDown: 2,
     ArrowLeft: 3,
-  }[e.code])
+  }
+
+  if(Object.keys(recognized_keys).indexOf(e.code) !== -1)
+    heading.set(recognized_keys[e.code])
 })
 
 setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 500)
