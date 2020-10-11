@@ -7,10 +7,10 @@ import Board from "./board"
 var dimensions = {x: 15, y: 15}
 
 var snake = observable([
-  [1,13],
-  [1,12],
-  [1,11],
-  [1,10]
+  [0,3],
+  [0,2],
+  [0,1],
+  [0,0]
 ])
 
 var meal = observable({x: 4, y: 3})
@@ -28,16 +28,23 @@ document.onkeydown = (e => {
     heading.set(recognized_keys[e.code])
 })
 
-setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 500)
+var clock = setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 500)
 
-const chooseNeighbor = (cell, heading) => (
-  [
+const chooseNeighbor = (cell, heading) => {
+  var neighbor = [
     [cell[0]    , cell[1] - 1],
     [cell[0] + 1, cell[1]    ],
     [cell[0]    , cell[1] + 1],
     [cell[0] - 1, cell[1]    ]
   ][heading]
-)
+
+  if(neighbor[0] < 0 || neighbor[0] >= dimensions.x)
+    clearInterval(clock)
+  if(neighbor[1] < 0 || neighbor[1] >= dimensions.y)
+    clearInterval(clock)
+
+  return neighbor
+}
 
 function App() {
   return (
