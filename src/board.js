@@ -8,7 +8,7 @@ const Board = ({dimensions, snake, meal, heading}) => (
         {[...Array(dimensions.x * dimensions.y).keys()].map(x => (
             <Cell>
                 {snake[0][1] * dimensions.x + snake[0][0] === x
-                ? ['^', '>', '\\/', '<'][heading]
+                ? ['^', '>', 'v', '<'][heading]
                 : null
                 }
                 {snake.slice(1).some(p => p[1] * dimensions.x + p[0] === x)
@@ -26,7 +26,7 @@ const Board = ({dimensions, snake, meal, heading}) => (
 )
 
 const Cell = styled.div`
-border: 1px solid #ededed;
+border: 1px solid #4d4d4d;
 `
 
 const Scene = styled.div`
