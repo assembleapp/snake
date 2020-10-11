@@ -30,9 +30,13 @@ document.onkeydown = (e => {
 
 var clock = setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 500)
 
+const endGame = () => {
+  clearInterval(clock)
+}
+
 autorun(() => {
   if(toJS(snake).map(x => x.join(",")).some((value, index, self) => self.indexOf(value) !== index ))
-    clearInterval(clock)
+    endGame()
 })
 
 const chooseNeighbor = (cell, heading) => {
@@ -44,9 +48,9 @@ const chooseNeighbor = (cell, heading) => {
   ][heading]
 
   if(neighbor[0] < 0 || neighbor[0] >= dimensions.x)
-    clearInterval(clock)
+    endGame()
   if(neighbor[1] < 0 || neighbor[1] >= dimensions.y)
-    clearInterval(clock)
+    endGame()
 
   return neighbor
 }
