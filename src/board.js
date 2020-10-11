@@ -2,7 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react"
 
-// headings: 0 is up, 1 is >, 2 is down, 3 is <
 const Board = ({dimensions, snake, meal, heading}) => (
     <Scene dimensions={dimensions}>
         {[...Array(dimensions.x * dimensions.y).keys()].map(x => (
