@@ -16,8 +16,17 @@ var snake = observable([
 var meal = observable({x: 4, y: 3})
 var heading = observable.box(2)
 
-setInterval(() => heading.set((heading.get() + 1) % 4), 500)
-setInterval(() => snake.replace([[0, snake[0][1] + 1]].concat(snake.slice(0, -1))), 2000)
+setInterval(() => heading.set((heading.get() + 1) % 4), 510)
+setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), 2000)
+
+const chooseNeighbor = (cell, heading) => (
+  [
+    [cell[0]    , cell[1] - 1],
+    [cell[0] + 1, cell[1]    ],
+    [cell[0]    , cell[1] + 1],
+    [cell[0] - 1, cell[1]    ]
+  ][heading]
+)
 
 function App() {
   return (
