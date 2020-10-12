@@ -40,7 +40,9 @@ document.onkeydown = (e => {
 var clock = null
 const runClock = () => {
   clearInterval(clock)
-  clock = setInterval(() => snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1))), clockSpeed)
+  clock = setInterval(() => runInAction(() =>
+    snake.replace([chooseNeighbor(snake[0], heading)].concat(snake.slice(0, -1)))
+  ), clockSpeed)
 }
 
 runClock()

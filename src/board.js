@@ -7,8 +7,9 @@ const Board = ({dimensions, cell}) => (
         {[...Array(dimensions.x * dimensions.y).keys()].map(n => ({
             x: (n % dimensions.x),
             y: Math.floor(n / dimensions.x),
-        })).map(place => <Cell>{cell(place)}</Cell>)
-        }
+        })).map(place =>
+            <Cell key={Object.values(place).join(',')}>{cell(place)}</Cell>
+        )}
     </Scene>
 )
 
