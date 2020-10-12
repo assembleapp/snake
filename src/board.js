@@ -4,18 +4,18 @@ import { observer } from "mobx-react"
 
 const Board = ({dimensions, snake, meal, heading}) => (
     <Scene dimensions={dimensions}>
-        {[...Array(dimensions.x * dimensions.y).keys()].map(x => (
+        {[...Array(dimensions.x * dimensions.y).keys()].map(n => (
             <Cell>
-                {snake[0][1] * dimensions.x + snake[0][0] === x
+                {(n % dimensions.x) === snake[0][0] && Math.floor(n / dimensions.x) === snake[0][1]
                 ? ['^', '>', 'v', '<'][heading]
                 : null
                 }
-                {snake.slice(1).some(p => p[1] * dimensions.x + p[0] === x)
+                {snake.slice(1).some(p => (n % dimensions.x) === p[0] && Math.floor(n / dimensions.x) === p[1])
                 ? '+'
                 : null
                 }
 
-                { meal[1] * dimensions.x + meal[0] === x
+                { (n % dimensions.x) === meal[0] && Math.floor(n / dimensions.x) === meal[1]
                 ? 'm'
                 : null
                 }
