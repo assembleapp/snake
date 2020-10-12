@@ -10,26 +10,29 @@ const Board = ({dimensions, snake, meal, heading}) => (
                 y: Math.floor(n / dimensions.x),
             }
 
-            return (
-            <Cell>
-                {place.x === snake[0][0] && place.y === snake[0][1]
-                ? ['^', '>', 'v', '<'][heading]
-                : null
-                }
-
-                {snake.slice(1).some(p => place.x === p[0] && place.y === p[1])
-                ? '+'
-                : null
-                }
-
-                {place.x === meal[0] && place.y === meal[1]
-                ? 'm'
-                : null
-                }
-            </Cell>
-            )}
-        )}
+            return <Cell>{cell(place, { snake, meal, heading })}</Cell>
+        })
+        }
     </Scene>
+)
+
+const cell = (place, { snake, meal, heading }) => (
+    <>
+    {place.x === snake[0][0] && place.y === snake[0][1]
+    ? ['^', '>', 'v', '<'][heading]
+    : null
+    }
+
+    {snake.slice(1).some(p => place.x === p[0] && place.y === p[1])
+    ? '+'
+    : null
+    }
+
+    {place.x === meal[0] && place.y === meal[1]
+    ? 'm'
+    : null
+    }
+    </>
 )
 
 const Cell = styled.div`
