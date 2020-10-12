@@ -4,23 +4,31 @@ import { observer } from "mobx-react"
 
 const Board = ({dimensions, snake, meal, heading}) => (
     <Scene dimensions={dimensions}>
-        {[...Array(dimensions.x * dimensions.y).keys()].map(n => (
+        {[...Array(dimensions.x * dimensions.y).keys()].map(n => {
+            const place = {
+                x: (n % dimensions.x),
+                y: Math.floor(n / dimensions.x),
+            }
+
+            return (
             <Cell>
-                {(n % dimensions.x) === snake[0][0] && Math.floor(n / dimensions.x) === snake[0][1]
+                {place.x === snake[0][0] && place.y === snake[0][1]
                 ? ['^', '>', 'v', '<'][heading]
                 : null
                 }
-                {snake.slice(1).some(p => (n % dimensions.x) === p[0] && Math.floor(n / dimensions.x) === p[1])
+
+                {snake.slice(1).some(p => place.x === p[0] && place.y === p[1])
                 ? '+'
                 : null
                 }
 
-                { (n % dimensions.x) === meal[0] && Math.floor(n / dimensions.x) === meal[1]
+                {place.x === meal[0] && place.y === meal[1]
                 ? 'm'
                 : null
                 }
             </Cell>
-        ))}
+            )}
+        )}
     </Scene>
 )
 
