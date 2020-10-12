@@ -4,14 +4,10 @@ import { observer } from "mobx-react"
 
 const Board = ({dimensions, cell}) => (
     <Scene dimensions={dimensions}>
-        {[...Array(dimensions.x * dimensions.y).keys()].map(n => {
-            const place = {
-                x: (n % dimensions.x),
-                y: Math.floor(n / dimensions.x),
-            }
-
-            return <Cell>{cell(place)}</Cell>
-        })
+        {[...Array(dimensions.x * dimensions.y).keys()].map(n => ({
+            x: (n % dimensions.x),
+            y: Math.floor(n / dimensions.x),
+        })).map(place => <Cell>{cell(place)}</Cell>)
         }
     </Scene>
 )
