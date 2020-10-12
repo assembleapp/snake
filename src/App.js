@@ -81,15 +81,32 @@ const chooseNeighbor = (cell, heading) => {
   return neighbor
 }
 
+const cell = (place) => (
+  <>
+  {place.x === snake[0][0] && place.y === snake[0][1]
+  ? ['^', '>', 'v', '<'][heading]
+  : null
+  }
+
+  {snake.slice(1).some(p => place.x === p[0] && place.y === p[1])
+  ? '+'
+  : null
+  }
+
+  {place.x === meal[0] && place.y === meal[1]
+  ? 'm'
+  : null
+  }
+  </>
+)
+
 function App() {
   return (
     <Application>
       <AppHeader>Snake Game</AppHeader>
       <Board
       dimensions={dimensions}
-      snake={snake}
-      meal={meal}
-      heading={heading}
+      cell={cell}
       />
       <AppHeader>Score: {snake.length}</AppHeader>
     </Application>
