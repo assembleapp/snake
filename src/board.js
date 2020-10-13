@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react"
 
-const Board = ({dimensions, cell}) => (
+const Board = ({dimensions, cell, Cell}) => (
     <Scene dimensions={dimensions}>
         {[...Array(dimensions.x * dimensions.y).keys()].map(n => ({
             x: (n % dimensions.x),
@@ -12,10 +12,6 @@ const Board = ({dimensions, cell}) => (
         )}
     </Scene>
 )
-
-const Cell = styled.div`
-border: 1px solid #4d4d4d;
-`
 
 const Scene = styled.div`
 display: grid;
