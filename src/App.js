@@ -1,14 +1,9 @@
 import React from 'react';
 import styled from "styled-components"
-import { observable, autorun, toJS, runInAction, computed } from "mobx"
+import { observable, autorun, toJS, runInAction } from "mobx"
 import { observer } from "mobx-react"
 
-import Board from "./board"
-
-const cellBorder = observable.box("1px solid #4d4d4d")
-const Cell = computed(() => styled.div`
-border: ${cellBorder.get()};
-`)
+import Board, { CellPanel } from "./board"
 
 const random_choose = () => (
   [
@@ -116,16 +111,11 @@ function App() {
         <Board
         dimensions={dimensions}
         cell={cell}
-        Cell={Cell.get()}
         />
         <AppHeader>Score: {snake.length}</AppHeader>
       </Column>
       <Column>
-        <input
-          type="text"
-          onChange={(e) => runInAction(() => cellBorder.set(e.target.value))}
-          value={cellBorder.get()}
-          />
+        <CellPanel />
       </Column>
     </Application>
   );
