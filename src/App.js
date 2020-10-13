@@ -5,9 +5,9 @@ import { observer } from "mobx-react"
 
 import Board from "./board"
 
-window.cellBorder = observable.box("1px solid #4d4d4d")
+const cellBorder = observable.box("1px solid #4d4d4d")
 const Cell = computed(() => styled.div`
-border: ${window.cellBorder.get()};
+border: ${cellBorder.get()};
 `)
 
 const random_choose = () => (
@@ -110,28 +110,39 @@ const cell = (place) => (
 function App() {
   return (
     <Application>
-      <AppHeader>Snake Game</AppHeader>
-      <Board
-      dimensions={dimensions}
-      cell={cell}
-      Cell={Cell.get()}
-      />
-      <AppHeader>Score: {snake.length}</AppHeader>
-      <input
-        type="text"
-        onChange={(e) => runInAction(() => window.cellBorder.set(e.target.value))}
-        value={window.cellBorder.get()}
-      />
+      <Column></Column>
+      <Column>
+        <AppHeader>Snake Game</AppHeader>
+        <Board
+        dimensions={dimensions}
+        cell={cell}
+        Cell={Cell.get()}
+        />
+        <AppHeader>Score: {snake.length}</AppHeader>
+      </Column>
+      <Column>
+        <input
+          type="text"
+          onChange={(e) => runInAction(() => cellBorder.set(e.target.value))}
+          value={cellBorder.get()}
+          />
+      </Column>
     </Application>
   );
 }
 
 const AppHeader = styled.header`
 display: flex;
-flex-direction: column;
-align-items: center;
+flex-direction: row;
 justify-content: center;
 font-size: calc(10px + 2vmin);
+align-items: center;
+`
+
+const Column = styled.div`
+display: flex;
+flex-direction: column;
+overflow-y: scroll;
 `
 
 const Application = styled.div`
@@ -139,7 +150,7 @@ text-align: center;
 background-color: #282c34;
 min-height: 100vh;
 display: grid;
-grid-template-rows: 4rem auto;
+grid-template-columns: 30% auto 20%;
 color: #ededed;
 `
 
